@@ -365,6 +365,8 @@ class AgentController extends Controller
         //         Response::HTTP_FORBIDDEN
         //     );
         // }
+        $user = Auth::user();
+
         if (!$user->hasPermission('make_transfer')) {
             return $this->error(
                 [
@@ -415,6 +417,7 @@ class AgentController extends Controller
         //         Response::HTTP_FORBIDDEN
         //     );
         // }
+        $user = Auth::user();
 
         if (!$user->hasPermission('make_transfer')) {
             return $this->error(
