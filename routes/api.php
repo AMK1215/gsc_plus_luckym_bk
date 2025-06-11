@@ -45,6 +45,8 @@ Route::middleware('api')->group(function () {
                 Route::get('/generate-referral-code', [AgentUtilityController::class, 'generateReferralCode']);
                 Route::get('/payment-types', [AgentUtilityController::class, 'getPaymentTypes']);
                 Route::post('/agent-create', [AgentController::class, 'store']);
+                Route::post('/agent-cash-in/{id}', [AgentController::class, 'makeCashIn']);
+                Route::post('/agent-cash-out/{id}', [AgentController::class, 'makeCashOut']);
             });
         });
     });
