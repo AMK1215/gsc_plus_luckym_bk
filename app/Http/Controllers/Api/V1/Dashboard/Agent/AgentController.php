@@ -8,7 +8,7 @@ use App\Enums\TransactionName;
 use App\Enums\TransactionType;
 use App\Enums\UserType;
 use App\Http\Requests\Dashboard\AgentRequest;
-use App\Http\Requests\TransferLogRequest;
+use App\Http\Requests\Dashboard\Agent\TransferLogRequest;
 use App\Models\Admin\TransferLog;
 use App\Models\PaymentType;
 use App\Models\User;
