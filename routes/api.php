@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\Dashboard\AuthController;
 use App\Http\Controllers\Api\V1\Dashboard\Agent\AgentController;
 use App\Http\Controllers\Api\V1\Dashboard\Agent\AgentUtilityController;
+use App\Http\Controllers\Api\V1\Dashboard\DashboardController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -35,6 +36,7 @@ Route::middleware('api')->group(function () {
     // This group uses 'auth:sanctum' middleware, which now runs *after* CORS
     Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::prefix('dashboard')->group(function () {
+            Route::get('/admin', [DashboardController::class, 'index']);
             Route::get('/user', [AuthController::class, 'getUser']);
             Route::post('/admin/change-password', [AuthController::class, 'changePassword']);
             Route::prefix('agent')->group(function () {
