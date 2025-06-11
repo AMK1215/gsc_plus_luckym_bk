@@ -352,6 +352,14 @@ class AgentController extends Controller
      * Remove the specified resource from storage.
      */
    
+     // get admin balance
+     public function getAdminBalance()
+     {
+        $admin = Auth::user();
+        return $this->success([
+            'balance' => $admin->balanceFloat
+        ], 'Admin balance fetched successfully');
+     }
 
     public function makeCashIn(TransferLogRequest $request, $id)
     {

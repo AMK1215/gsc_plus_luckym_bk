@@ -47,6 +47,7 @@ Route::middleware('api')->group(function () {
                 Route::post('/agent-create', [AgentController::class, 'store']);
                 Route::post('/agent-cash-in/{id}', [AgentController::class, 'makeCashIn']);
                 Route::post('/agent-cash-out/{id}', [AgentController::class, 'makeCashOut']);
+                Route::get('/get-admin-balance', [AgentController::class, 'getAdminBalance']);
             });
         });
     });
