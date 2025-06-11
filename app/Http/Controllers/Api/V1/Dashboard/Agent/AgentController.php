@@ -204,12 +204,13 @@ class AgentController extends Controller
             }
 
             $data = $request->validated();
-            \Log::info('Validated agent data', $data);
+            Log::info('Validated agent data', $data);
             
             // Create the agent
             $agent = User::create([
                 'user_name' => $data['user_name'],
                 'name' => $data['name'],
+                'site_link' => $data['site_link'],
                 'phone' => $data['phone'],
                 'password' => Hash::make($data['password']),
                 'payment_type_id' => $data['payment_type_id'],
@@ -223,15 +224,20 @@ class AgentController extends Controller
                 'is_changed_password' => 0,
                 'type' => 'agent'
             ]);
-            \Log::info('Agent created', ['agent_id' => $agent->id]);
+            Log::info('Agent created', ['agent_id' => $agent->id]);
 
             // Assign agent role
             $agent->roles()->attach(self::AGENT_ROLE);
-            \Log::info('Agent role attached', ['agent_id' => $agent->id]);
+            Log::info('Agent role attached', ['agent_id' => $agent->id]);
 
             return $this->success(
                 [
-                    'agent' => $agent->load('roles', 'paymentType')
+                    'agent' => $agent->load('roles', 'paymentType'),
+                    'site_link' => $data['site_link'],
+                    'referral_code' => $data['referral_code'],
+                    'user_name' => $data['user_name'],
+                    'password' => $data['password']
+                    
                 ],
                 'Agent created successfully',
                 Response::HTTP_CREATED
