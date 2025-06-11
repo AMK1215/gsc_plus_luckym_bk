@@ -110,6 +110,8 @@ class AgentController extends Controller
                     'user_name' => $user->user_name,
                     'name' => $user->name,
                     'phone' => $user->phone,
+                    'site_link' => $user->site_link,
+                    'balance' => $user->balanceFloat,
                     'email' => $user->email,
                     'status' => $user->status,
                     'is_changed_password' => $user->is_changed_password,
@@ -363,16 +365,7 @@ class AgentController extends Controller
 
     public function makeCashIn(TransferLogRequest $request, $id)
     {
-        // if (Gate::denies('make_transfer') || ! $this->ifChildOfParent(request()->user()->id, $id)) {
-        //     return $this->error(
-        //         [
-        //             'user_id' => Auth::id(),
-        //             'permissions' => Auth::user()->getAllPermissions()->pluck('title')
-        //         ],
-        //         'You do not have permission to access this resource',
-        //         Response::HTTP_FORBIDDEN
-        //     );
-        // }
+        
         $user = Auth::user();
 
         if (!$user->hasPermission('make_transfer')) {
@@ -415,16 +408,7 @@ class AgentController extends Controller
 
     public function makeCashOut(TransferLogRequest $request, string $id)
     {
-        // if (Gate::denies('make_transfer') || ! $this->ifChildOfParent(request()->user()->id, $id)) {
-        //     return $this->error(
-        //         [
-        //             'user_id' => Auth::id(),
-        //             'permissions' => Auth::user()->getAllPermissions()->pluck('title')
-        //         ],
-        //         'You do not have permission to access this resource',
-        //         Response::HTTP_FORBIDDEN
-        //     );
-        // }
+        
         $user = Auth::user();
 
         if (!$user->hasPermission('make_transfer')) {
