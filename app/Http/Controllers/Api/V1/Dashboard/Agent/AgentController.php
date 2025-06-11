@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Enums\TransactionName;
 use App\Enums\TransactionType;
 use App\Enums\UserType;
-use App\Http\Requests\Dashboard\AgentRequest;
+use App\Http\Requests\AgentRequest;
 use App\Http\Requests\Dashboard\TransferLogRequest;
 use App\Models\Admin\TransferLog;
 use App\Models\PaymentType;
@@ -183,7 +183,7 @@ class AgentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateAgentRequest $request)
+    public function store(AgentRequest $request)
     {
         try {
             $user = Auth::user();
