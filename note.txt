@@ -6,6 +6,16 @@ sudo systemctl restart postgresql
 sudo -i -u postgres
 psql
 
+php -r "file_put_contents('/var/www/gsc_plus_luckym_bk/storage/logs/laravel.log', '');"
+* * * * * cd /var/www/gsc_plus_luckym_bk && php artisan schedule:run >> /dev/null 2>&1
+tail -f /var/log/mysql/error.log
+
+sudo chown -R www-data:www-data /var/www/gsc_plus_luckym_bk/storage
+sudo chown -R www-data:www-data /var/www/gsc_plus_luckym_bk/bootstrap/cache
+sudo chmod -R 775 /var/www/gsc_plus_luckym_bk/storage
+sudo chmod -R 775 /var/www/gsc_plus_luckym_bk/bootstrap/cache
+
+
 psql -h 127.0.0.1 -U luckym_user -d gsc_luckym
 pwd-delighT@#$2024team
 
