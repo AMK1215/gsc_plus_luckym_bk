@@ -27,4 +27,17 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    public function render($request, \Throwable $exception)
+    {
+        if ($request->is('api/*')) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $exception->getMessage(),
+                'trace' => config('app.debug') ? $exception->getTrace() : [],
+            ], method_exists($exception, 'getStatusCode') ? $exception->getStatusCode() : 500);
+        }
+
+        return parent::render($request, $exception);
+    }
 }
