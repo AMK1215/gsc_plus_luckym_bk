@@ -355,11 +355,22 @@ class AgentController extends Controller
 
     public function makeCashIn(TransferLogRequest $request, $id)
     {
-        if (Gate::denies('make_transfer') || ! $this->ifChildOfParent(request()->user()->id, $id)) {
+        // if (Gate::denies('make_transfer') || ! $this->ifChildOfParent(request()->user()->id, $id)) {
+        //     return $this->error(
+        //         [
+        //             'user_id' => Auth::id(),
+        //             'permissions' => Auth::user()->getAllPermissions()->pluck('title')
+        //         ],
+        //         'You do not have permission to access this resource',
+        //         Response::HTTP_FORBIDDEN
+        //     );
+        // }
+        if (!$user->hasPermission('make_transfer')) {
             return $this->error(
                 [
-                    'user_id' => Auth::id(),
-                    'permissions' => Auth::user()->getAllPermissions()->pluck('title')
+                    'user_id' => $user->id,
+                    'user_roles' => $user->roles->pluck('id'),
+                    'permissions' => $user->getAllPermissions()->pluck('title')
                 ],
                 'You do not have permission to access this resource',
                 Response::HTTP_FORBIDDEN
@@ -394,11 +405,23 @@ class AgentController extends Controller
 
     public function makeCashOut(TransferLogRequest $request, string $id)
     {
-        if (Gate::denies('make_transfer') || ! $this->ifChildOfParent(request()->user()->id, $id)) {
+        // if (Gate::denies('make_transfer') || ! $this->ifChildOfParent(request()->user()->id, $id)) {
+        //     return $this->error(
+        //         [
+        //             'user_id' => Auth::id(),
+        //             'permissions' => Auth::user()->getAllPermissions()->pluck('title')
+        //         ],
+        //         'You do not have permission to access this resource',
+        //         Response::HTTP_FORBIDDEN
+        //     );
+        // }
+
+        if (!$user->hasPermission('make_transfer')) {
             return $this->error(
                 [
-                    'user_id' => Auth::id(),
-                    'permissions' => Auth::user()->getAllPermissions()->pluck('title')
+                    'user_id' => $user->id,
+                    'user_roles' => $user->roles->pluck('id'),
+                    'permissions' => $user->getAllPermissions()->pluck('title')
                 ],
                 'You do not have permission to access this resource',
                 Response::HTTP_FORBIDDEN
