@@ -48,13 +48,13 @@ class DashboardController extends Controller
         $todayDeposit = $this->getTodayDeposit();
         $todayWithdraw = $this->getTodayWithdraw();
 
-        $provider_balance = (new AppSetting)->provider_initial_balance + SeamlessTransaction::sum('transaction_amount');
+        // $provider_balance = (new AppSetting)->provider_initial_balance + SeamlessTransaction::sum('transaction_amount');
 
         return response()->json([
             'status' => 'success',
             'message' => 'Dashboard data fetched successfully',
             'data' => [
-                'provider_balance' => $provider_balance,
+                // 'provider_balance' => $provider_balance,
                 'agent_count' => $agent_count,
                 'player_count' => $player_count,
                 'user' => $user,
