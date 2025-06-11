@@ -1,0 +1,30 @@
+sudo chown -R www-data:www-data /var/www/gsc_plus_luckym_bk
+sudo chmod -R 755 /var/www/gsc_plus_luckym_bk/storage
+sudo apt install php8.3-pgsql -y 
+sudo nano /etc/postgresql/*/main/pg_hba.conf
+sudo systemctl restart postgresql
+sudo -i -u postgres
+psql
+
+psql -h 127.0.0.1 -U luckym_user -d gsc_luckym
+pwd-delighT@#$2024team
+
+sudo -i -u postgres
+psql
+ALTER USER luckym_user WITH PASSWORD 'luckymillion';
+\q
+
+
+-- As postgres user in psql
+CREATE DATABASE gsc_luckymillion;
+CREATE USER luckym_thb_user WITH PASSWORD 'luckymillion';
+GRANT ALL PRIVILEGES ON DATABASE gsc_luckymillion TO luckym_thb_user;
+ALTER USER luckym_thb_user WITH PASSWORD 'luckymillion';
+
+sudo -i -u postgres
+psql -d gsc_luckymillion
+
+GRANT ALL ON SCHEMA public TO luckym_thb_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO luckym_thb_user;
+
+

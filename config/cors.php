@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://localhost:5173'],
+    'allowed_origins' => ['https://gsc-plus-luckym-bk-ui.vercel.app'],
 
     'allowed_origins_patterns' => [],
 
