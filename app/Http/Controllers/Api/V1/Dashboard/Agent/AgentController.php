@@ -27,6 +27,7 @@ use Yajra\DataTables\Contracts\DataTable;
 use Yajra\DataTables\Facades\DataTables;
 use App\Traits\HttpResponses;
 use App\Http\Requests\Dashboard\Agent\CreateAgentRequest;
+use Illuminate\Support\Facades\Log;
 
 class AgentController extends Controller
 {
@@ -185,11 +186,16 @@ class AgentController extends Controller
      */
     public function store(AgentRequest $request)
     {
+        Log::info('Agent store request received', [
+            'request_data' => $request->all(),
+            'user' => Auth::user()
+        ]);
         try {
             $user = Auth::user();
             
             // Check if user has the permission
             if (!$user->hasPermission('agent_create')) {
+                \Log::warning('User does not have permission to create agent', ['user_id' => $user->id]);
                 return $this->error(
                     null,
                     'You do not have permission to create agents',
@@ -198,6 +204,7 @@ class AgentController extends Controller
             }
 
             $data = $request->validated();
+            \Log::info('Validated agent data', $data);
             
             // Create the agent
             $agent = User::create([
@@ -216,9 +223,11 @@ class AgentController extends Controller
                 'is_changed_password' => 0,
                 'type' => 'agent'
             ]);
+            \Log::info('Agent created', ['agent_id' => $agent->id]);
 
             // Assign agent role
             $agent->roles()->attach(self::AGENT_ROLE);
+            \Log::info('Agent role attached', ['agent_id' => $agent->id]);
 
             return $this->success(
                 [
@@ -229,6 +238,11 @@ class AgentController extends Controller
             );
 
         } catch (\Exception $e) {
+            \Log::error('Error creating agent', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'request_data' => $request->all()
+            ]);
             return $this->error(
                 [
                     'error' => $e->getMessage(),
