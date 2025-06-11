@@ -195,7 +195,7 @@ class AgentController extends Controller
             
             // Check if user has the permission
             if (!$user->hasPermission('agent_create')) {
-                \Log::warning('User does not have permission to create agent', ['user_id' => $user->id]);
+                Log::warning('User does not have permission to create agent', ['user_id' => $user->id]);
                 return $this->error(
                     null,
                     'You do not have permission to create agents',
