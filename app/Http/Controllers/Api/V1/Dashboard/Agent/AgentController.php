@@ -525,11 +525,15 @@ class AgentController extends Controller
 
     public function makeChangePassword($id, Request $request)
     {
-        if (Gate::denies('agent_change_password_access') || ! $this->ifChildOfParent(request()->user()->id, $id)) {
+        
+        $user = Auth::user();
+
+        if (!$user->hasPermission('agent_change_password_access')) {
             return $this->error(
                 [
-                    'user_id' => Auth::id(),
-                    'permissions' => Auth::user()->getAllPermissions()->pluck('title')
+                    'user_id' => $user->id,
+                    'user_roles' => $user->roles->pluck('id'),
+                    'permissions' => $user->getAllPermissions()->pluck('title')
                 ],
                 'You do not have permission to access this resource',
                 Response::HTTP_FORBIDDEN
@@ -545,10 +549,10 @@ class AgentController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->back()
-            ->with('success', 'Agent Change Password successfully')
-            ->with('password', $request->password)
-            ->with('username', $agent->user_name);
+            return redirect()->back()
+                ->with('success', 'Agent Change Password successfully')
+                ->with('password', $request->password)
+                ->with('username', $agent->user_name);
     }
 
     private function generateReferralCode($length = 8)
