@@ -503,25 +503,7 @@ class AgentController extends Controller
         ], 'User ' . ($user->status == 1 ? 'activated' : 'banned') . ' successfully');
     }
 
-    public function getChangePassword($id)
-    {
-        if (Gate::denies('agent_change_password_access') || ! $this->ifChildOfParent(request()->user()->id, $id)) {
-            return $this->error(
-                [
-                    'user_id' => Auth::id(),
-                    'permissions' => Auth::user()->getAllPermissions()->pluck('title')
-                ],
-                'You do not have permission to access this resource',
-                Response::HTTP_FORBIDDEN
-            );
-        }
-
-        $agent = User::find($id);
-
-        return $this->success([
-            'agent' => $agent
-        ], 'Change password data fetched successfully');
-    }
+   
 
     public function makeChangePassword($id, Request $request)
     {
@@ -549,10 +531,10 @@ class AgentController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-            return redirect()->back()
-                ->with('success', 'Agent Change Password successfully')
-                ->with('password', $request->password)
-                ->with('username', $agent->user_name);
+        return $this->success([
+            'agent' => $agent,
+            'password' => $request->password
+        ], 'Password changed successfully');
     }
 
     private function generateReferralCode($length = 8)
