@@ -532,7 +532,7 @@ class AgentController extends Controller
         ]);
 
         return $this->success([
-            'agent' => $agent,
+            'agent' => $agent->user_name,
             'password' => $request->password
         ], 'Password changed successfully');
     }
