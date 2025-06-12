@@ -480,16 +480,20 @@ class AgentController extends Controller
 
     public function banAgent($id)
     {
-        if (! $this->ifChildOfParent(request()->user()->id, $id)) {
+        $admin = Auth::user();
+
+        if (!$admin->hasPermission('admin_access')) {
             return $this->error(
                 [
-                    'user_id' => Auth::id(),
-                    'permissions' => Auth::user()->getAllPermissions()->pluck('title')
+                    'user_id' => $admin->id,
+                    'user_roles' => $admin->roles->pluck('id'),
+                    'permissions' => $admin->getAllPermissions()->pluck('title')
                 ],
                 'You do not have permission to access this resource',
                 Response::HTTP_FORBIDDEN
             );
         }
+
 
         $user = User::find($id);
         $user->update(['status' => $user->status == 1 ? 0 : 1]);
