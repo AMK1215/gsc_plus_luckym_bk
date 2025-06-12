@@ -348,7 +348,16 @@ class AgentController extends Controller
 
         return $this->success([
             'user_id' => $user->id,
-            'status' => $user->status
+            'name' => $user->name,
+            'user_name' => $user->user_name,
+            'phone' => $user->phone,
+            'payment_type_id' => $user->payment_type_id,
+            'account_number' => $user->account_number,
+            'account_name' => $user->account_name,
+            'line_id' => $user->line_id,
+            'commission' => $user->commission,
+            'status' => $user->status,
+            'agent_logo' => $user->agent_logo
         ], 'User updated successfully');
     }
 
