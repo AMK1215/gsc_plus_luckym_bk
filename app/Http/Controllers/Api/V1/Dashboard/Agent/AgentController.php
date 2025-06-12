@@ -346,8 +346,10 @@ class AgentController extends Controller
 
         $user->update($param);
 
-        return redirect()->back()
-            ->with('success', 'Agent Updated successfully');
+        return $this->success([
+            'user_id' => $user->id,
+            'status' => $user->status
+        ], 'User updated successfully');
     }
 
     /**

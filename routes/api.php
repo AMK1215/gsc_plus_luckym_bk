@@ -50,6 +50,7 @@ Route::middleware('api')->group(function () {
                 Route::get('/get-admin-balance', [AgentController::class, 'getAdminBalance']);
                 Route::post('/agent-change-password/{id}', [AgentController::class, 'makeChangePassword']);
                 Route::post('/agent-ban/{id}', [AgentController::class, 'banAgent']);
+                Route::post('/agent-update/{id}', [AgentController::class, 'update']);
             });
         });
     });
